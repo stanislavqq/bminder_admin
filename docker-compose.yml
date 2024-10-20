@@ -1,0 +1,28 @@
+services:
+  app:
+    build: .
+    ports:
+      - 8080:80
+    command: >
+      /bin/sh -c "php-fpm"
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    mem_limit: 256M
+  #  environment:
+
+
+  nginx:
+    image: nginx:latest
+    mem_limit: 64M
+    ports:
+      - 8181:80
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+
+networks:
+  default:
+    name: dev
+    external: true

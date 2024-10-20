@@ -1,0 +1,14 @@
+<h1>{{ page_title }}</h1>
+
+<ul>
+    {% for person in persons %}
+        <li>
+        * {{ person.firstname }} - {{ person.day }}.{{ person.month }}.{{ person.year|e }}
+        </li>
+    {% endfor %}
+</ul>
+
+<form action="">
+    <label for="">Имя</label>
+    <input type="text">
+</form>
