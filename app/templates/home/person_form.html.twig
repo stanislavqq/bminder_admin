@@ -1,0 +1,42 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <div class="row">
+        <div class="six columns">
+            <a href="{{ path('home') }}" class="button button-primary"><- Назад</a>
+        </div>
+        {% if id|default %}
+        <div class="six columns">
+            <a href="{{ path("person.delete", {id: id}) }}" class="button button-warning u-pull-right">Удалить</a>
+        </div>
+        {% endif %}
+    </div>
+    <h1>{{ page_title }}</h1>
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+    <div class="row">
+        <div class="six columns">
+            {{ form_row(form.firstname) }}
+        </div>
+        <div class="six columns">
+            {{ form_row(form.lastname) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="four columns">{{ form_row(form.day) }}</div>
+        <div class="four columns">{{ form_row(form.month) }}</div>
+        <div class="four columns">{{ form_row(form.year) }}</div>
+    </div>
+    <div class="row">
+        <div class="column">
+            {{ form_row(form.comment) }}
+            {{ form_row(form.save) }}
+        </div>
+    </div>
+
+
+    {{ form_end(form) }}
+{% endblock %}
