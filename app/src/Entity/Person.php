@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PersonRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PersonRepository::class)]
 class Person
@@ -11,20 +12,29 @@ class Person
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    public ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 50)]
-    private string $firstname;
+    public string $firstname;
+
     #[ORM\Column(type: 'string', length: 50)]
-    private string $lastname;
+    public string $lastname;
+
     #[ORM\Column(type: 'integer', length: 10)]
-    private int $day;
+    #[Assert\LessThanOrEqual(31)]
+    #[Assert\NotNull(message: "Выберите день")]
+    public int $day;
+
     #[ORM\Column(type: 'integer', length: 10)]
-    private int $month;
-    #[ORM\Column(type: 'integer', length: 10)]
-    private ?int $year;
-    #[ORM\Column(type: 'string', length: 255)]
-    private ?string $comment;
+    #[Assert\LessThanOrEqual(12)]
+    #[Assert\NotNull(message: "Выберите месяц")]
+    public int $month;
+
+    #[ORM\Column(type: 'integer', length: 10, nullable: true)]
+    public ?int $year;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    public ?string $comment;
 
     public function getId(): ?int
     {
@@ -59,5 +69,25 @@ class Person
     public function getComment(): ?string
     {
         return $this->comment;
+    }
+
+    public function getSort() : int
+    {
+        return  $this->month;
+    }
+
+    public function getDate() : \DateTimeImmutable
+    {
+        return \DateTimeImmutable::createFromFormat("m-d", sprintf('%d-%d', $this->month, $this->day));
+    }
+
+    public function getDateString() : string
+    {
+        return $this->getDate()->format('d F');
+    }
+
+    public function getName() : string
+    {
+        return $this->firstname . " " . $this->lastname;
     }
 }

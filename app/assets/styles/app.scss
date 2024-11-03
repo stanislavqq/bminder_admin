@@ -1,0 +1,35 @@
+body {
+  background-color: #eee;
+}
+
+body, html {
+  padding: 0;
+  margin: 0;
+}
+
+.wrapper {
+  background: #fdfdfd;
+  padding: 10px 20px;
+  margin: 60px auto 0;
+  border-radius: 5px;
+}
+
+textarea {
+  resize: none;
+}
+
+.button-warning {
+  background: orangered;
+  border-color: orangered;
+  color: #fff;
+}
+
+.required+ul {
+  color: #ff4a4a;
+  background: #e4e4e4;
+  border-radius: 5px;
+  list-style: none;
+  padding: 0px 15px 0px;
+  margin: 0;
+  text-align: left;
+}

@@ -16,28 +16,16 @@ class PersonRepository extends ServiceEntityRepository
         parent::__construct($registry, Person::class);
     }
 
-    //    /**
-    //     * @return Person[] Returns an array of Person objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Person
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /**
+     * @return array|Person[]
+     */
+    public function getSortedPersons() : array
+    {
+        $persons = $this->findBy([], ['month' => 'ASC', 'day' => 'ASC']);
+        $current = new \DateTimeImmutable();
+        usort($persons, function ($a, $b) use ($current) {
+            return $a->getDate()->getTimestamp() < $current->getTimestamp() ? 1 : 0;
+        });
+        return $persons;
+    }
 }
